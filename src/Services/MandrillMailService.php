@@ -21,7 +21,7 @@ class MandrillMailService
     /**
      * @var array
      */
-    protected $info = [];
+    protected static $info = [];
 
     /**
      * Send the email message with given template.
@@ -36,11 +36,11 @@ class MandrillMailService
             $message->constructMessageForMandrill());
 
         if (is_array($result) && count($result) > 0) {
-            $this->info = reset($result);
+            self::$info = reset($result);
 
-            if (in_array($this->info['status'], ['rejected', 'invalid'])) {
-                Log::error(sprintf('Could not send email message to %s, reject_reason: %s', $this->info['email'],
-                    $this->info['reject_reason']));
+            if (in_array(self::$info['status'], ['rejected', 'invalid'])) {
+                Log::error(sprintf('Could not send email message to %s, reject_reason: %s', self::$info['email'],
+                    self::$info['reject_reason']));
 
                 return false;
             }
@@ -61,11 +61,11 @@ class MandrillMailService
         $result = MandrillMailer::send($message->constructMessageForMandrill());
 
         if (is_array($result) && count($result) > 0) {
-            $this->info = reset($result);
+            self::$info = reset($result);
 
-            if (in_array($this->info['status'], ['rejected', 'invalid'])) {
-                Log::error(sprintf('Could not send email message to %s, reject_reason: %s', $this->info['email'],
-                    $this->info['reject_reason']));
+            if (in_array(self::$info['status'], ['rejected', 'invalid'])) {
+                Log::error(sprintf('Could not send email message to %s, reject_reason: %s', self::$info['email'],
+                    self::$info['reject_reason']));
 
                 return false;
             }
@@ -81,7 +81,7 @@ class MandrillMailService
      */
     public function getInfo()
     {
-        return $this->info;
+        return self::$info;
     }
 
     /**
@@ -91,8 +91,8 @@ class MandrillMailService
      */
     public function getRejectReason()
     {
-        if (isset( $this->info['reject_reason'] )) {
-            return $this->info['reject_reason'];
+        if (isset( self::$info['reject_reason'] )) {
+            return self::$info['reject_reason'];
         }
 
         return null;
