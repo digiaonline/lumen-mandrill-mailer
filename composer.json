@@ -1,0 +1,26 @@
+{
+  "name": "nordsoftware/lumen-mandrill-mailer",
+  "description": "Mandrill mailer for the Lumen PHP framework.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kenneth Söderlund",
+      "email": "kenneth.soderlund@nordsoftware.com"
+    }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "~2.2",
+    "mandrill/mandrill": "^1.0"
+  },
+  "require-dev": {
+    "laravel/lumen-framework": "~5.2"
+  },
+  "suggests": [
+    "nordsoftware/lumen-core"
+  ],
+  "autoload": {
+    "psr-4": {
+      "Nord\\Lumen\\Mandrill\\Mailer\\": "src"
+    }
+  }
+}
